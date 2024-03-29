@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Catch Game</title>
+<style type="text/css">
+body {
+    font-size: 20px;
+    font-family: Verdana;
+}
+#shape {
+    background-color: black;
+    position: relative;
+}
+#head {
+    color: green;
+    font-size: 30px;
+}
+#best-time {
+    color: blue;
+}
+</style>
+</head>
+<body>
+<h1 align="center">Catch Game</h1>
+<h1 align="center" id="head">Click on the shape as fast as you can</h1>
+<p>Your time: <span id="firstpara"></span></p>
+<p>Best time: <span id="best-time">-</span></p>
+<div id="shape"></div>
+<script type="text/javascript">
+var start = new Date().getTime();
+var bestTime = Infinity; // Initialize best time to infinity
+
+function makeShapeAppear() {
+    var width = Math.random() * 300;
+    var height = Math.random() * 300;
+    var top = Math.random() * 300;
+    var left = Math.random() * 300;
+    if (Math.random() > 0.5) {
+        document.getElementById("shape").style.borderRadius = "50%";
+    } else {
+        document.getElementById("shape").style.borderRadius = "0";
+    }
+    document.getElementById("shape").style.width = width + "px";
+    document.getElementById("shape").style.height = height + "px";
+    document.getElementById("shape").style.left = left + "px";
+    document.getElementById("shape").style.top = top + "px";
+    document.getElementById("shape").style.display = "block";
+    start = new Date().getTime();
+}
+
+function shapeappear() {
+    setTimeout(makeShapeAppear, Math.random() * 2000);
+}
+
+shapeappear();
+
+document.getElementById("shape").onclick = function() {
+    document.getElementById("shape").style.display = "none";
+    var end = new Date().getTime();
+    var timeTaken = (end - start) / 1000;
+    document.getElementById("firstpara").innerHTML = timeTaken + "s";
+    if (timeTaken < bestTime) { // Update best time if the current time is better
+        bestTime = timeTaken;
+        document.getElementById("best-time").innerHTML = bestTime.toFixed(2) + "s";
+    }
+    shapeappear();
+}
+</script>
+</body>
+</html>
